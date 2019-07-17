@@ -1,2 +1,5 @@
-# alura-classes
-alura-classes
+# Alura Courses
+
+# Alura Plus
+
+# Alura - Studies Plan
