@@ -18,7 +18,7 @@ public final class TopicDetailResponse {
 	private TopicStatus status;
 	private List<AnswerResponse> answers;
 	
-	private TopicDetailResponse(Topic topic) {
+	private TopicDetailResponse(final Topic topic) {
 		this.id = topic.getId();
 		this.title = topic.getTitle();
 		this.message = topic.getMessage();
@@ -29,7 +29,7 @@ public final class TopicDetailResponse {
 		this.answers.addAll(topic.getAnswers().stream().map(AnswerResponse::new).collect(Collectors.toList()));
 	}
 	
-	public final static TopicDetailResponse from(Topic topic) {
+	public final static TopicDetailResponse from(final Topic topic) {
 		return new TopicDetailResponse(topic);
 	}
 
