@@ -16,7 +16,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-public class User implements UserDetails {
+public final class User implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -27,7 +27,7 @@ public class User implements UserDetails {
 	private String password;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
-	private List<Perfil> profiles = new ArrayList<>();
+	private List<Profile> profiles = new ArrayList<>();
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -80,7 +80,7 @@ public class User implements UserDetails {
 		this.password = password;
 	}	
 
-	public List<Perfil> getProfiles() {
+	public List<Profile> getProfiles() {
 		return Collections.unmodifiableList(profiles);
 	}
 

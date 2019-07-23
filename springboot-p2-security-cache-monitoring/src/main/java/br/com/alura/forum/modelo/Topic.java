@@ -36,12 +36,12 @@ public final class Topic implements Serializable {
 	public Topic() {
 	}
 	
-	public Topic(String titulo, String mensagem, Course curso) {
-		this.title = titulo;
-		this.message = mensagem;
-		this.curso = curso;
+	public Topic(String title, String message, Course course) {
+		this.title = title;
+		this.message = message;
+		this.curso = course;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -71,64 +71,32 @@ public final class Topic implements Serializable {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getTitulo() {
+	public String getTitle() {
 		return title;
 	}
 
-	public void setTitulo(String titulo) {
-		this.title = titulo;
-	}
-
-	public String getMensagem() {
+	public String getMessage() {
 		return message;
 	}
 
-	public void setMensagem(String mensagem) {
-		this.message = mensagem;
-	}
-
-	public LocalDateTime getDataCriacao() {
+	public LocalDateTime getCreated() {
 		return created;
-	}
-
-	public void setDataCriacao(LocalDateTime dataCriacao) {
-		this.created = dataCriacao;
 	}
 
 	public TopicStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(TopicStatus status) {
-		this.status = status;
-	}
-
-	public User getAutor() {
+	public User getActor() {
 		return actor;
-	}
-
-	public void setAutor(User autor) {
-		this.actor = autor;
 	}
 
 	public Course getCurso() {
 		return curso;
 	}
 
-	public void setCurso(Course curso) {
-		this.curso = curso;
-	}
-
 	public List<Answer> getRespostas() {
 		return respostas;
-	}
-
-	public void setRespostas(List<Answer> respostas) {
-		this.respostas = respostas;
 	}
 
 }
