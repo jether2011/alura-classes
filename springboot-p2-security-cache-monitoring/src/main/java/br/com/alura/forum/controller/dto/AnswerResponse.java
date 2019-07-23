@@ -11,14 +11,14 @@ public final class AnswerResponse {
 	private LocalDateTime created;
 	private String actorName;
 	
-	public AnswerResponse(Answer answer) {
+	public AnswerResponse(final Answer answer) {
 		this.id = answer.getId();
 		this.message = answer.getMessage();
 		this.created = answer.getCreated();
 		this.actorName = answer.getActorName();
 	}
 
-	public static AnswerResponse from(Answer answer) {
+	public static AnswerResponse from(final Answer answer) {
 		return new AnswerResponse(answer);
 	}
 
