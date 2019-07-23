@@ -15,7 +15,7 @@ public final class LoginForm {
 		return password;
 	}
 
-	public UsernamePasswordAuthenticationToken from() {
+	public final UsernamePasswordAuthenticationToken from() {
 		return new UsernamePasswordAuthenticationToken(email, password);
 	}
 
