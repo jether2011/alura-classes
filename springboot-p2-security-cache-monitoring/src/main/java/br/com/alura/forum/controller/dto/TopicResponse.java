@@ -6,14 +6,14 @@ import org.springframework.data.domain.Page;
 
 import br.com.alura.forum.modelo.Topic;
 
-public class TopicResponse {
+public final class TopicResponse {
 
 	private Long id;
 	private String title;
 	private String message;
 	private LocalDateTime created;
 	
-	public TopicResponse(Topic topico) {
+	public TopicResponse(final Topic topico) {
 		this.id = topico.getId();
 		this.title = topico.getTitle();
 		this.message = topico.getMessage();
