@@ -29,9 +29,9 @@ public final class Topic implements Serializable {
 	@ManyToOne
 	private User actor;
 	@ManyToOne
-	private Course curso;
-	@OneToMany(mappedBy = "topico")
-	private List<Answer> respostas = new ArrayList<>();
+	private Course course;
+	@OneToMany(mappedBy = "topic")
+	private List<Answer> answers = new ArrayList<>();
 	
 	public Topic() {
 	}
@@ -39,7 +39,7 @@ public final class Topic implements Serializable {
 	public Topic(String title, String message, Course course) {
 		this.title = title;
 		this.message = message;
-		this.curso = course;
+		this.course = course;
 	}
 	
 	@Override
@@ -91,12 +91,16 @@ public final class Topic implements Serializable {
 		return actor;
 	}
 
-	public Course getCurso() {
-		return curso;
+	public Course getCourse() {
+		return course;
 	}
 
-	public List<Answer> getRespostas() {
-		return respostas;
+	public List<Answer> getAnswers() {
+		return answers;
+	}
+
+	public String getActorName() {
+		return this.actor.getName();
 	}
 
 }
