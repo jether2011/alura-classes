@@ -36,7 +36,7 @@ public class TopicResponse {
 		return created;
 	}
 
-	public static Page<TopicResponse> converter(Page<Topic> topicos) {
-		return topicos.map(TopicResponse::new);
+	public static Page<TopicResponse> to(Page<Topic> topics) {
+		return topics.map(TopicResponse::new);
 	}
 }
