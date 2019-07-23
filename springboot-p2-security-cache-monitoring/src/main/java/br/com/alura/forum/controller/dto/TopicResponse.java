@@ -36,7 +36,7 @@ public final class TopicResponse {
 		return created;
 	}
 
-	public static Page<TopicResponse> to(Page<Topic> topics) {
+	public static Page<TopicResponse> to(final Page<Topic> topics) {
 		return topics.map(TopicResponse::new);
 	}
 }
