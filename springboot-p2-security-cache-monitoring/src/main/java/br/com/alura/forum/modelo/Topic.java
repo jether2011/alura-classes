@@ -1,5 +1,6 @@
 package br.com.alura.forum.modelo;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,28 +15,30 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Topico {
+public final class Topic implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String titulo;
-	private String mensagem;
-	private LocalDateTime dataCriacao = LocalDateTime.now();
+	private String title;
+	private String message;
+	private LocalDateTime created = LocalDateTime.now();
 	@Enumerated(EnumType.STRING)
-	private StatusTopico status = StatusTopico.NAO_RESPONDIDO;
+	private TopicStatus status = TopicStatus.NOT_ANSWERED;
 	@ManyToOne
-	private Usuario autor;
+	private User actor;
 	@ManyToOne
-	private Curso curso;
+	private Course curso;
 	@OneToMany(mappedBy = "topico")
-	private List<Resposta> respostas = new ArrayList<>();
+	private List<Answer> respostas = new ArrayList<>();
 	
-	public Topico() {
+	public Topic() {
 	}
 	
-	public Topico(String titulo, String mensagem, Curso curso) {
-		this.titulo = titulo;
-		this.mensagem = mensagem;
+	public Topic(String titulo, String mensagem, Course curso) {
+		this.title = titulo;
+		this.message = mensagem;
 		this.curso = curso;
 	}
 
@@ -55,7 +58,7 @@ public class Topico {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Topico other = (Topico) obj;
+		Topic other = (Topic) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -73,58 +76,58 @@ public class Topico {
 	}
 
 	public String getTitulo() {
-		return titulo;
+		return title;
 	}
 
 	public void setTitulo(String titulo) {
-		this.titulo = titulo;
+		this.title = titulo;
 	}
 
 	public String getMensagem() {
-		return mensagem;
+		return message;
 	}
 
 	public void setMensagem(String mensagem) {
-		this.mensagem = mensagem;
+		this.message = mensagem;
 	}
 
 	public LocalDateTime getDataCriacao() {
-		return dataCriacao;
+		return created;
 	}
 
 	public void setDataCriacao(LocalDateTime dataCriacao) {
-		this.dataCriacao = dataCriacao;
+		this.created = dataCriacao;
 	}
 
-	public StatusTopico getStatus() {
+	public TopicStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(StatusTopico status) {
+	public void setStatus(TopicStatus status) {
 		this.status = status;
 	}
 
-	public Usuario getAutor() {
-		return autor;
+	public User getAutor() {
+		return actor;
 	}
 
-	public void setAutor(Usuario autor) {
-		this.autor = autor;
+	public void setAutor(User autor) {
+		this.actor = autor;
 	}
 
-	public Curso getCurso() {
+	public Course getCurso() {
 		return curso;
 	}
 
-	public void setCurso(Curso curso) {
+	public void setCurso(Course curso) {
 		this.curso = curso;
 	}
 
-	public List<Resposta> getRespostas() {
+	public List<Answer> getRespostas() {
 		return respostas;
 	}
 
-	public void setRespostas(List<Resposta> respostas) {
+	public void setRespostas(List<Answer> respostas) {
 		this.respostas = respostas;
 	}
 
