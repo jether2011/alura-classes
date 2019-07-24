@@ -14,7 +14,7 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
 @Configuration
-public final class SwaggerConfigurations {
+public class SwaggerConfigurations {
 	
 	private static final String ALURA_FORUM = "br.com.alura.forum";
 
