@@ -25,54 +25,57 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.alura.forum.controller.dto.DetalhesDoTopicoDto;
-import br.com.alura.forum.controller.dto.TopicoDto;
-import br.com.alura.forum.controller.form.AtualizacaoTopicoForm;
+import br.com.alura.forum.controller.dto.TopicDetailResponse;
+import br.com.alura.forum.controller.dto.TopicResponse;
+import br.com.alura.forum.controller.form.UpdateTopicForm;
 import br.com.alura.forum.controller.form.TopicoForm;
-import br.com.alura.forum.modelo.Topico;
-import br.com.alura.forum.repository.CursoRepository;
-import br.com.alura.forum.repository.TopicoRepository;
+import br.com.alura.forum.modelo.Topic;
+import br.com.alura.forum.repository.CourseRepository;
+import br.com.alura.forum.repository.TopicRepository;
 
 @RestController
-@RequestMapping("/topicos")
-public class TopicosController {
+@RequestMapping("/topics")
+public class TopicsController {
+	
+	private static final String TOPICS_PATH_ID = "/topics/{id}";
+	private static final String TOPICS = "topics";
+
+	@Autowired
+	private TopicRepository topicRepository;
 	
 	@Autowired
-	private TopicoRepository topicoRepository;
-	
-	@Autowired
-	private CursoRepository cursoRepository;
+	private CourseRepository courseRepository;
 	
 	@GetMapping
-	@Cacheable(value = "listaDeTopicos")
-	public Page<TopicoDto> lista(@RequestParam(required = false) String nomeCurso, 
-			@PageableDefault(sort = "dataCriacao", direction = Direction.DESC, page = 0, size = 10) Pageable paginacao) {
+	@Cacheable(value = TOPICS)
+	public Page<TopicResponse> list(@RequestParam(required = false) final String courseName, 
+			@PageableDefault(sort = "created", direction = Direction.DESC, page = 0, size = 10) final Pageable pagination) {
 		
-		if (nomeCurso == null) {
-			Page<Topico> topicos = topicoRepository.findAll(paginacao);
-			return TopicoDto.converter(topicos);
+		if (courseName == null) {
+			Page<Topic> topics = topicRepository.findAll(pagination);
+			return TopicResponse.from(topics);
 		} else {
-			Page<Topico> topicos = topicoRepository.findByCursoNome(nomeCurso, paginacao);
-			return TopicoDto.converter(topicos);
+			Page<Topic> topics = topicRepository.findByCourseName(courseName, pagination);
+			return TopicResponse.from(topics);
 		}
 	}
 	
 	@PostMapping
 	@Transactional
-	@CacheEvict(value = "listaDeTopicos", allEntries = true)
-	public ResponseEntity<TopicoDto> cadastrar(@RequestBody @Valid TopicoForm form, UriComponentsBuilder uriBuilder) {
-		Topico topico = form.converter(cursoRepository);
-		topicoRepository.save(topico);
+	@CacheEvict(value = TOPICS, allEntries = true)
+	public ResponseEntity<TopicResponse> create(@RequestBody @Valid final TopicoForm form, final UriComponentsBuilder uriBuilder) {
+		Topic topic = form.toTopic(courseRepository);
+		topicRepository.save(topic);
 		
-		URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();
-		return ResponseEntity.created(uri).body(new TopicoDto(topico));
+		URI uri = uriBuilder.path(TOPICS_PATH_ID).buildAndExpand(topic.getId()).toUri();
+		return ResponseEntity.created(uri).body(new TopicResponse(topic));
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<DetalhesDoTopicoDto> detalhar(@PathVariable Long id) {
-		Optional<Topico> topico = topicoRepository.findById(id);
-		if (topico.isPresent()) {
-			return ResponseEntity.ok(new DetalhesDoTopicoDto(topico.get()));
+	public ResponseEntity<TopicDetailResponse> detail(@PathVariable final Long id) {
+		Optional<Topic> topic = topicRepository.findById(id);
+		if (topic.isPresent()) {
+			return ResponseEntity.ok(TopicDetailResponse.from(topic.get()));
 		}
 		
 		return ResponseEntity.notFound().build();
@@ -80,12 +83,12 @@ public class TopicosController {
 	
 	@PutMapping("/{id}")
 	@Transactional
-	@CacheEvict(value = "listaDeTopicos", allEntries = true)
-	public ResponseEntity<TopicoDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoTopicoForm form) {
-		Optional<Topico> optional = topicoRepository.findById(id);
-		if (optional.isPresent()) {
-			Topico topico = form.atualizar(id, topicoRepository);
-			return ResponseEntity.ok(new TopicoDto(topico));
+	@CacheEvict(value = TOPICS, allEntries = true)
+	public ResponseEntity<TopicResponse> atualizar(@PathVariable final Long id, 
+			@RequestBody @Valid final UpdateTopicForm form) {
+		Optional<Topic> topic = topicRepository.findById(id);
+		if (topic.isPresent()) {			
+			return ResponseEntity.ok(new TopicResponse(form.update(id, topicRepository)));
 		}
 		
 		return ResponseEntity.notFound().build();
@@ -93,11 +96,11 @@ public class TopicosController {
 	
 	@DeleteMapping("/{id}")
 	@Transactional
-	@CacheEvict(value = "listaDeTopicos", allEntries = true)
-	public ResponseEntity<?> remover(@PathVariable Long id) {
-		Optional<Topico> optional = topicoRepository.findById(id);
-		if (optional.isPresent()) {
-			topicoRepository.deleteById(id);
+	@CacheEvict(value = TOPICS, allEntries = true)
+	public ResponseEntity<?> remover(@PathVariable final Long id) {
+		Optional<Topic> topic = topicRepository.findById(id);
+		if (topic.isPresent()) {
+			topicRepository.deleteById(id);
 			return ResponseEntity.ok().build();
 		}
 		
