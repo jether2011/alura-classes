@@ -35,7 +35,7 @@ import br.com.alura.forum.repository.TopicRepository;
 
 @RestController
 @RequestMapping("/topics")
-public class TopicsController {
+public final class TopicsController {
 	
 	private static final String TOPICS_PATH_ID = "/topics/{id}";
 	private static final String TOPICS = "topics";
