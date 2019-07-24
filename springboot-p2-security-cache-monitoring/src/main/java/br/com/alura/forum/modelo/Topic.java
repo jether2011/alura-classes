@@ -103,4 +103,12 @@ public final class Topic implements Serializable {
 		return this.actor.getName();
 	}
 
+	public void setTitle(final String title) {
+		this.title = title;	
+	}
+
+	public void setMessage(final String message) {
+		this.message = message;
+	}
+
 }
