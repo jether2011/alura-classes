@@ -29,7 +29,7 @@ public final class TopicoForm {
 		return new TopicoForm(title, message, courseName);
 	}
 
-	public final Topic from(final CourseRepository cursoRepository) {
+	public final Topic toTopic(final CourseRepository cursoRepository) {
 		return new Topic(title, message, cursoRepository.findByName(courseName));
 	}
 
