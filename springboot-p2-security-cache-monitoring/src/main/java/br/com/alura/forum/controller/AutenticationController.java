@@ -19,7 +19,7 @@ import br.com.alura.forum.controller.form.LoginForm;
 
 @RestController
 @RequestMapping("/auth")
-public final class AutenticationController {
+public class AutenticationController {
 	
 	@Autowired
 	private AuthenticationManager authManager;
