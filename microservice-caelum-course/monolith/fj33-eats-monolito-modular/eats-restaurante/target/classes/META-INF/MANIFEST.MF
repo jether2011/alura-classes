@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: eats-restaurante
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: jether.rodrigues
+Implementation-Vendor-Id: br.com.caelum
+Build-Jdk: 1.8.0_131
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/eats/eats-restaurante
+Created-By: Maven Integration for Eclipse
+
