@@ -9,7 +9,8 @@ import { environment } from 'src/environments/environment';
 })
 export class PagamentoService {
 
-  private API = environment.baseUrl + '/pagamentos';
+  private API_V1 = 'v1/'
+  private API = environment.paymentService + this.API_V1 + 'payments';
 
   constructor(private http: HttpClient) {
   }
@@ -24,6 +25,11 @@ export class PagamentoService {
 
   cancela(pagamento): Observable<any> {
     return this.http.delete(`${this.API}/${pagamento.id}`);
+  }
+
+  ajustaIds(pagamento) {
+    pagamento.paymentFormId = pagamento.paymentFormId || pagamento.formaDePagamento.id
+    pagamento.orderId = pagamento.orderId || pagamento.pedido.id
   }
 
 }
