@@ -34,11 +34,11 @@
 			<artifactId>eats-pagamento</artifactId>
 			<version>${project.version}</version>
 		</dependency> -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>br.com.caelum</groupId>
 			<artifactId>eats-distancia</artifactId>
 			<version>${project.version}</version>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>

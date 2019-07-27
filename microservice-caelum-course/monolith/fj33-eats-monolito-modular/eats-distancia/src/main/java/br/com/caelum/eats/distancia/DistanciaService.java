@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import br.com.caelum.eats.admin.TipoDeCozinha;
 import br.com.caelum.eats.exception.ResourceNotFoundException;
 import br.com.caelum.eats.restaurante.Restaurante;
-import br.com.caelum.eats.restaurante.RestauranteService;
+import br.com.caelum.eats.restaurante.RestauranteGateway;
 import lombok.AllArgsConstructor;
 
 /*
@@ -25,7 +25,7 @@ class DistanciaService {
 
 	private static final Pageable LIMIT = PageRequest.of(0,5);
 
-	private RestauranteService restaurantes;
+	private RestauranteGateway restaurantes;
 
 	public List<RestauranteComDistanciaDto> restaurantesMaisProximosAoCep(String cep) {
 		List<Restaurante> aprovados = restaurantes.findAllByAprovado(true, LIMIT).getContent();
