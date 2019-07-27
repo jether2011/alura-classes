@@ -1,17 +1,21 @@
 package br.com.alura.forum.modelo;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Curso {
+public final class Course implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String nome;
-	private String categoria;
+	private String name;
+	private String category;
 	
 	@Override
 	public int hashCode() {
@@ -29,7 +33,7 @@ public class Curso {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Curso other = (Curso) obj;
+		Course other = (Course) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -42,24 +46,11 @@ public class Curso {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public String getName() {
+		return name;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getCategory() {
+		return category;
 	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getCategoria() {
-		return categoria;
-	}
-
-	public void setCategoria(String categoria) {
-		this.categoria = categoria;
-	}
-
 }

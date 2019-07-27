@@ -1,5 +1,6 @@
 package br.com.alura.forum.modelo;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
@@ -9,18 +10,20 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Resposta {
+public final class Answer implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String mensagem;
+	private String message;
 	
 	@ManyToOne
-	private Topico topico;
-	private LocalDateTime dataCriacao = LocalDateTime.now();
+	private Topic topic;
+	private LocalDateTime created = LocalDateTime.now();
 	@ManyToOne
-	private Usuario autor;
-	private Boolean solucao = false;
+	private User actor;
+	private Boolean solution = false;
 
 	@Override
 	public int hashCode() {
@@ -38,7 +41,7 @@ public class Resposta {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Resposta other = (Resposta) obj;
+		Answer other = (Answer) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -51,48 +54,28 @@ public class Resposta {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public String getMessage() {
+		return message;
 	}
 
-	public String getMensagem() {
-		return mensagem;
+	public Topic getTopic() {
+		return topic;
 	}
 
-	public void setMensagem(String mensagem) {
-		this.mensagem = mensagem;
+	public LocalDateTime getCreated() {
+		return created;
 	}
 
-	public Topico getTopico() {
-		return topico;
+	public User getActor() {
+		return actor;
 	}
 
-	public void setTopico(Topico topico) {
-		this.topico = topico;
+	public Boolean isSolution() {
+		return solution;
 	}
 
-	public LocalDateTime getDataCriacao() {
-		return dataCriacao;
+	public String getActorName() {
+		return getActor().getName();
 	}
-
-	public void setDataCriacao(LocalDateTime dataCriacao) {
-		this.dataCriacao = dataCriacao;
-	}
-
-	public Usuario getAutor() {
-		return autor;
-	}
-
-	public void setAutor(Usuario autor) {
-		this.autor = autor;
-	}
-
-	public Boolean getSolucao() {
-		return solucao;
-	}
-
-	public void setSolucao(Boolean solucao) {
-		this.solucao = solucao;
-	}
-
+	
 }

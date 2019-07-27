@@ -5,36 +5,32 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
-import br.com.alura.forum.modelo.Curso;
-import br.com.alura.forum.modelo.Topico;
-import br.com.alura.forum.repository.CursoRepository;
+import br.com.alura.forum.modelo.Topic;
+import br.com.alura.forum.repository.CourseRepository;
 
-public class TopicoForm {
+public final class TopicoForm {
 
 	@NotNull @NotEmpty @Length(min = 5)
-	private String titulo;
+	private String title;
 	
 	@NotNull @NotEmpty @Length(min = 10)
-	private String mensagem;
+	private String message;
 	
 	@NotNull @NotEmpty
-	private String nomeCurso;
+	private String courseName;
 
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
+	private TopicoForm(final String title, final String message, final String courseName) {
+		this.title = title;
+		this.message = message;
+		this.courseName = courseName;
 	}
 
-	public void setMensagem(String mensagem) {
-		this.mensagem = mensagem;
+	public static final TopicoForm of(final String title, final String message, final String courseName) {
+		return new TopicoForm(title, message, courseName);
 	}
 
-	public void setNomeCurso(String nomeCurso) {
-		this.nomeCurso = nomeCurso;
-	}
-
-	public Topico converter(CursoRepository cursoRepository) {
-		Curso curso = cursoRepository.findByNome(nomeCurso);
-		return new Topico(titulo, mensagem, curso);
+	public final Topic toTopic(final CourseRepository cursoRepository) {
+		return new Topic(title, message, cursoRepository.findByName(courseName));
 	}
 
 }

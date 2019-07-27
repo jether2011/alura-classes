@@ -28,8 +28,8 @@ public class AutenticationController {
 	private TokenService tokenService;
 
 	@PostMapping
-	public ResponseEntity<TokenResponse> authenticate(@RequestBody @Valid LoginForm form) {
-		UsernamePasswordAuthenticationToken dadosLogin = form.converter();
+	public ResponseEntity<TokenResponse> authenticate(@RequestBody @Valid final LoginForm form) {
+		UsernamePasswordAuthenticationToken dadosLogin = form.from();
 		
 		try {
 			Authentication authentication = authManager.authenticate(dadosLogin);

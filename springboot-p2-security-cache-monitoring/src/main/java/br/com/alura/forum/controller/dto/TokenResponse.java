@@ -1,13 +1,6 @@
 package br.com.alura.forum.controller.dto;
 
-/**
- * 
- * Updated by: 
- * 
- * @author jether-nascimento
- *
- */
-public class TokenResponse {
+public final class TokenResponse {
 
 	private String token;
 	private String type;
