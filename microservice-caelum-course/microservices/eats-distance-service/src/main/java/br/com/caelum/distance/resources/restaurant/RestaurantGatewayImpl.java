@@ -3,6 +3,8 @@ package br.com.caelum.distance.resources.restaurant;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import br.com.caelum.distance.domain.restaurant.RestaurantGateway;
 import br.com.caelum.distance.domain.restaurant.entities.Restaurant;
 import kong.unirest.GenericType;
@@ -17,11 +19,12 @@ import kong.unirest.Unirest;
  */
 public final class RestaurantGatewayImpl implements RestaurantGateway {
 
-	private final static String MAIN_HOST = "";
+	@Value(value = "${service.restaurants.url}")
+	private String serviceMainHost;
 	
 	@Override
 	public Optional<Restaurant> findById(final Long restaurantId) {		
-		Restaurant restaurant = Unirest.get(MAIN_HOST + "{id}")
+		Restaurant restaurant = Unirest.get(this.serviceMainHost + "/restaurantes/{id}")
 									.header("Accept", "application/json")
 									.routeParam("id", restaurantId.toString())
 									.asObject(Restaurant.class)
@@ -32,7 +35,7 @@ public final class RestaurantGatewayImpl implements RestaurantGateway {
 
 	@Override
 	public List<Restaurant> findAllByApprovedAndCookType(final Long cookTypeId, final int limit) {
-		return Unirest.get(MAIN_HOST + "{approved}/{cookTypeId}")
+		return Unirest.get(this.serviceMainHost + "/restaurantes/{approved}/{cookTypeId}")
 				.header("Accept", "application/json")
 				.routeParam("approved", "true")
 				.routeParam("cookTypeId", cookTypeId.toString())
@@ -42,9 +45,8 @@ public final class RestaurantGatewayImpl implements RestaurantGateway {
 
 	@Override
 	public List<Restaurant> findAllByApproved(final int limit) {
-		return Unirest.get(MAIN_HOST + "{approved}")
+		return Unirest.get(this.serviceMainHost + "/restaurantes/aprovados")
 				.header("Accept", "application/json")
-				.routeParam("approved", "true")
 				.asObject(new GenericType<List<Restaurant>>(){})
 				.getBody();
 	}
