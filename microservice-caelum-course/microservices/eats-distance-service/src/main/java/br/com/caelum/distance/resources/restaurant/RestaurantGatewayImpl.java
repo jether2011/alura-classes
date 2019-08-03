@@ -8,6 +8,13 @@ import br.com.caelum.distance.domain.restaurant.entities.Restaurant;
 import kong.unirest.GenericType;
 import kong.unirest.Unirest;
 
+/**
+ * 
+ * @author jether.rodrigues
+ * 03/08/2019
+ * 
+ * http://kong.github.io/unirest-java/#shutting-down
+ */
 public final class RestaurantGatewayImpl implements RestaurantGateway {
 
 	private final static String MAIN_HOST = "";
