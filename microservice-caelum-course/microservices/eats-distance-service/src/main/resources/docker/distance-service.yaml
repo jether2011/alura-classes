@@ -1,0 +1,39 @@
+version: '3.2'
+services:
+  ## https://hub.docker.com/_/mongo-express
+  mongo-express:
+    image: mongo-express
+    ports:
+      - 18081:8081
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: fj-33
+      ME_CONFIG_BASICAUTH_PASSWORD: fj-33
+      ME_CONFIG_MONGODB_SERVER: mongodb-distance
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: true"
+    depends_on:
+      - mongodb-distance
+    links:
+      - mongodb-distance
+    networks:
+      - mongo-network
+    restart: on-failure
+
+  mongodb-distance:
+    image: mongo:3.6
+    restart: on-failure
+    ports: 
+      - "27017:27017"
+    volumes:
+      - "/Users/jether.rodrigues/WORKSPACE/DEV/docker/volumes/mongodb:/data/db"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    networks:
+      - mongo-network
+
+networks: 
+    mongo-network:
+      driver: bridge
