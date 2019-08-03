@@ -23,6 +23,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.caelum.payment.application.exceptions.ResourceNotFoundException;
 import br.com.caelum.payment.domain.Payment;
+import br.com.caelum.payment.resource.OrderGateway;
 import br.com.caelum.payment.resource.PaymentRepository;
 import lombok.AllArgsConstructor;
 
@@ -32,6 +33,7 @@ import lombok.AllArgsConstructor;
 class PaymentController {
 
 	private PaymentRepository paymentRepository;
+	private OrderGateway orderGateway;
 
 	@GetMapping
 	public ResponseEntity<List<PaymentDto>> list() {
@@ -59,6 +61,9 @@ class PaymentController {
 		Payment payment = paymentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException());
 		payment.setStatus(Payment.Status.CONFIRMED);
 		paymentRepository.save(payment);
+		
+		orderGateway.paidOrderConfirm(payment.getId());
+		
 		return new PaymentDto(payment);
 	}
 
