@@ -1,4 +1,4 @@
-package br.com.caelum.distance;
+package br.com.caelum.distance.application.web.restaurant.response;
 
 import java.math.BigDecimal;
 
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-class RestaurantDistanceDto {
+public class RestaurantDistanceDto {
 
 	private Long restauranteId;
 

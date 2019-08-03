@@ -1,7 +1,9 @@
-package br.com.caelum.distance;
+package br.com.caelum.distance.domain.restaurant;
 
 import java.util.List;
 import java.util.Optional;
+
+import br.com.caelum.distance.domain.restaurant.entities.Restaurant;
 
 public interface RestaurantGateway {
 	

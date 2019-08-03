@@ -1,39 +1,45 @@
-package br.com.caelum.distance;
+package br.com.caelum.distance.application.web.restaurant;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import br.com.caelum.distance.exceptions.ResourceNotFoundException;
+import br.com.caelum.distance.application.web.restaurant.response.RestaurantDistanceDto;
+import br.com.caelum.distance.application.web.util.exceptions.ResourceNotFoundException;
+import br.com.caelum.distance.resources.restaurant.entities.RestaurantMongo;
+import br.com.caelum.distance.resources.restaurant.repository.RestaurantMongoRepository;
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
 class DistanceService {
 
-	private static final int LIMIT = 10;
+	private static final Pageable LIMIT = PageRequest.of(0, 5);
 
 
-	private RestaurantGateway restaurantGateway;
+	private RestaurantMongoRepository mongoRepository;
 
 	public List<RestaurantDistanceDto> restaurantsNearestCep(String cep) {
-		List<Restaurant> approveds = restaurantGateway.findAllByApproved(LIMIT);
-		return calculateDistanceToRestaurants(approveds, cep);
+		Page<RestaurantMongo> restaurants = mongoRepository.findAll(LIMIT);
+		return calculateDistanceToRestaurants(restaurants.getContent(), cep);
 	}
 
 	public List<RestaurantDistanceDto> restaurantsCookTypeNearestCep(Long cookTypeId, String cep) {
-		List<Restaurant> cookTypeApproveds = restaurantGateway.findAllByApprovedAndCookType(cookTypeId, LIMIT);
-		return calculateDistanceToRestaurants(cookTypeApproveds, cep);
+		Page<RestaurantMongo> cookTypeApproveds = mongoRepository.findAllBycookId(cookTypeId, LIMIT);
+		return calculateDistanceToRestaurants(cookTypeApproveds.getContent(), cep);
 	}
 
 	public RestaurantDistanceDto restaurantDistanceCep(Long restauranteId, String cep) {
-		Restaurant restaurant = restaurantGateway.findById(restauranteId).orElseThrow(() -> new ResourceNotFoundException());
+		RestaurantMongo restaurant = mongoRepository.findById(restauranteId).orElseThrow(() -> new ResourceNotFoundException());
 		return new RestaurantDistanceDto(restauranteId, cepDistance(restaurant.getCep(), cep));
 	}
 
-	private List<RestaurantDistanceDto> calculateDistanceToRestaurants(List<Restaurant> restaurants, String cep) {
+	private List<RestaurantDistanceDto> calculateDistanceToRestaurants(List<RestaurantMongo> restaurants, String cep) {
 		return restaurants
 				.stream()
 				.map(restaurant -> {

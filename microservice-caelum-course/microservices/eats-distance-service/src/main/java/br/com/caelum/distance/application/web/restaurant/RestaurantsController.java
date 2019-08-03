@@ -1,8 +1,8 @@
-package br.com.caelum.distance;
+package br.com.caelum.distance.application.web.restaurant;
 
-import static br.com.caelum.distance.Constants.HOST;
-import static br.com.caelum.distance.Constants.RESOURCE;
-import static br.com.caelum.distance.Constants.VERSION1;
+import static br.com.caelum.distance.application.web.util.Constants.HOST;
+import static br.com.caelum.distance.application.web.util.Constants.RESOURCE;
+import static br.com.caelum.distance.application.web.util.Constants.VERSION1;
 
 import java.util.List;
 
@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.caelum.distance.application.web.restaurant.response.RestaurantDistanceDto;
 import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping(HOST + VERSION1 + RESOURCE)
 @AllArgsConstructor
-class NearestRestaurantsController {
+class RestaurantsController {
 
 	private DistanceService distanceService;
 

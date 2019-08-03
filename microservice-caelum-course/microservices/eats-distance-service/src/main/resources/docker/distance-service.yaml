@@ -12,7 +12,7 @@ services:
       ME_CONFIG_MONGODB_PORT: 27017
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: root
-      ME_CONFIG_MONGODB_ENABLE_ADMIN: true"
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
     depends_on:
       - mongodb-distance
     links:
@@ -27,7 +27,7 @@ services:
     ports: 
       - "27017:27017"
     volumes:
-      - "/Users/jether.rodrigues/WORKSPACE/DEV/docker/volumes/mongodb:/data/db"
+      - "/home/micro8520/Desktop/jether/volumes/mongodb:/data/db"
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
