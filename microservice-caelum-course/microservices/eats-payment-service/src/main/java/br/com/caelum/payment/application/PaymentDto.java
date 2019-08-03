@@ -1,9 +1,10 @@
-package br.com.caelum.payment;
+package br.com.caelum.payment.application;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import br.com.caelum.payment.domain.Payment;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

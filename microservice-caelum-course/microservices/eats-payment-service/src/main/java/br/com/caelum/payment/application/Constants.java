@@ -1,4 +1,4 @@
-package br.com.caelum.payment;
+package br.com.caelum.payment.application;
 
 public final class Constants {
 

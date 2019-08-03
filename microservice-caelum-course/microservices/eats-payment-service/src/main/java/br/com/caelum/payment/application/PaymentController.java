@@ -1,4 +1,9 @@
-package br.com.caelum.payment;
+package br.com.caelum.payment.application;
+
+import static br.com.caelum.payment.application.Constants.HOST;
+import static br.com.caelum.payment.application.Constants.PAYMENT_ID_DETAIL;
+import static br.com.caelum.payment.application.Constants.RESOURCE;
+import static br.com.caelum.payment.application.Constants.VERSION1;
 
 import java.net.URI;
 import java.util.List;
@@ -16,12 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import static br.com.caelum.payment.Constants.HOST;
-import static br.com.caelum.payment.Constants.VERSION1;
-import static br.com.caelum.payment.Constants.RESOURCE;
-import static br.com.caelum.payment.Constants.PAYMENT_ID_DETAIL;
-
-import br.com.caelum.payment.exceptions.ResourceNotFoundException;
+import br.com.caelum.payment.application.exceptions.ResourceNotFoundException;
+import br.com.caelum.payment.domain.Payment;
+import br.com.caelum.payment.resource.PaymentRepository;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -67,5 +69,4 @@ class PaymentController {
 		paymentRepository.save(payment);
 		return new PaymentDto(payment);
 	}
-
 }
