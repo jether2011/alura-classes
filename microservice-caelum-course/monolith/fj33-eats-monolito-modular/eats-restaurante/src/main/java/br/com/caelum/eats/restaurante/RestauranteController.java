@@ -33,6 +33,11 @@ class RestauranteController {
 	public List<RestauranteDto> detalhePorIds(@RequestParam List<Long> ids) {
 		return restauranteRepo.findAllById(ids).stream().map(RestauranteDto::new).collect(Collectors.toList());
 	}
+	
+	@GetMapping("/restaurantes/aprovados")
+	public List<RestauranteDto> todosOsAprovados() {
+		return restauranteRepo.findAllByAprovado(true).stream().map(RestauranteDto::new).collect(Collectors.toList());
+	}
 
 	@GetMapping("/parceiros/restaurantes/{id}")
 	public RestauranteDto detalhaParceiro(@PathVariable("id") Long id) {
