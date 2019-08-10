@@ -1,9 +1,7 @@
 package br.com.caelum.payment.application;
 
-import static br.com.caelum.payment.application.Constants.HOST;
 import static br.com.caelum.payment.application.Constants.PAYMENT_ID_DETAIL;
 import static br.com.caelum.payment.application.Constants.RESOURCE;
-import static br.com.caelum.payment.application.Constants.VERSION1;
 
 import java.net.URI;
 import java.util.List;
@@ -28,7 +26,7 @@ import br.com.caelum.payment.resource.entities.Payment;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping(HOST + VERSION1 + RESOURCE)
+@RequestMapping(RESOURCE)
 @AllArgsConstructor
 class PaymentController {
 
