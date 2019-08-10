@@ -22,9 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.caelum.payment.application.exceptions.ResourceNotFoundException;
-import br.com.caelum.payment.domain.Payment;
 import br.com.caelum.payment.resource.OrderGateway;
 import br.com.caelum.payment.resource.PaymentRepository;
+import br.com.caelum.payment.resource.entities.Payment;
 import lombok.AllArgsConstructor;
 
 @RestController

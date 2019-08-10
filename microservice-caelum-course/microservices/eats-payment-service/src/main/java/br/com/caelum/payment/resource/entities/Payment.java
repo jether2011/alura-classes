@@ -1,4 +1,4 @@
-package br.com.caelum.payment.domain;
+package br.com.caelum.payment.resource.entities;
 
 import java.math.BigDecimal;
 
