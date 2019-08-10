@@ -23,13 +23,15 @@ public class RestaurantMongoMigration implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		List<Restaurant> restaurants = restaurantGateway.findAllByApproved(100);
 		
-		restaurants
+		if(restaurants != null) {
+			restaurants
 			.stream()
 				.forEach(restaurant -> {					
 					if(!restaurantMongoRepository.existsById(restaurant.getId())) {
 						restaurantMongoRepository.save(RestaurantMongo.from(restaurant));
 					}
 				});
+		}
 	}
 	
 }
