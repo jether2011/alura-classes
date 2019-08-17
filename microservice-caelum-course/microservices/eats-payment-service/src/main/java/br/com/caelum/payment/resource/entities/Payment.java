@@ -9,6 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -18,10 +19,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Entity
 public class Payment {
 
 	public static enum Status {
@@ -31,7 +32,8 @@ public class Payment {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@SequenceGenerator(name = "payment_id_seq", sequenceName = "payment_id_seq", allocationSize = 1)
+	@GeneratedValue(generator="payment_id_seq", strategy=GenerationType.SEQUENCE)
 	private Long id;
 
 	@NotNull @Positive
