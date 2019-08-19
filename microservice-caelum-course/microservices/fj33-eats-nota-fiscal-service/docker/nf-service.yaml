@@ -1,0 +1,21 @@
+version: '3.2'
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: rabbitmq
+    environment:
+      - "RABBITMQ_DEFAULT_PASS=eats"
+      - "RABBITMQ_DEFAULT_USER=eatsNFservice"
+      - "RABBITMQ_DEFAULT_VHOST='eats'"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - /home/micro8520/Desktop/jether/volumes/rabbitmq:/var/lib/rabbitmq
+    networks:
+      - rabbitmq-network
+    restart: on-failure
+
+networks: 
+  rabbitmq-network:
+    driver: bridge

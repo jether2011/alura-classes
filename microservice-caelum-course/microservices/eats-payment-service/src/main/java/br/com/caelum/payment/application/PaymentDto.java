@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import br.com.caelum.payment.domain.Payment;
+import br.com.caelum.payment.resource.entities.Payment;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

@@ -1,9 +1,7 @@
 package br.com.caelum.payment.application;
 
-import static br.com.caelum.payment.application.Constants.HOST;
 import static br.com.caelum.payment.application.Constants.PAYMENT_ID_DETAIL;
 import static br.com.caelum.payment.application.Constants.RESOURCE;
-import static br.com.caelum.payment.application.Constants.VERSION1;
 
 import java.net.URI;
 import java.util.List;
@@ -22,18 +20,22 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.caelum.payment.application.exceptions.ResourceNotFoundException;
-import br.com.caelum.payment.domain.Payment;
+import br.com.caelum.payment.domain.PaymentObserver;
 import br.com.caelum.payment.resource.OrderGateway;
 import br.com.caelum.payment.resource.PaymentRepository;
+import br.com.caelum.payment.resource.entities.Payment;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping(HOST + VERSION1 + RESOURCE)
+@RequestMapping(RESOURCE)
 @AllArgsConstructor
+@Slf4j
 class PaymentController {
 
 	private PaymentRepository paymentRepository;
 	private OrderGateway orderGateway;
+	private PaymentObserver<Payment> paymentObserver;
 
 	@GetMapping
 	public ResponseEntity<List<PaymentDto>> list() {
@@ -51,9 +53,9 @@ class PaymentController {
 	@PostMapping
 	public ResponseEntity<PaymentDto> creates(@RequestBody @Valid Payment payment, UriComponentsBuilder uriBuilder) {
 		payment.setStatus(Payment.Status.CREATED);
-		Payment salvo = paymentRepository.save(payment);
-		URI path = uriBuilder.path(PAYMENT_ID_DETAIL).buildAndExpand(salvo.getId()).toUri();
-		return ResponseEntity.created(path).body(new PaymentDto(salvo));
+		Payment saved = paymentRepository.save(payment);
+		URI path = uriBuilder.path(PAYMENT_ID_DETAIL).buildAndExpand(saved.getId()).toUri();
+		return ResponseEntity.created(path).body(new PaymentDto(saved));
 	}
 
 	@PutMapping("/{id}")
@@ -62,7 +64,8 @@ class PaymentController {
 		payment.setStatus(Payment.Status.CONFIRMED);
 		paymentRepository.save(payment);
 		
-		orderGateway.paidOrderConfirm(payment.getId());
+		tryConfirmPaidOrder(payment);
+		trySendConfirmedPayment(payment);
 		
 		return new PaymentDto(payment);
 	}
@@ -73,5 +76,22 @@ class PaymentController {
 		payment.setStatus(Payment.Status.CANCELED);
 		paymentRepository.save(payment);
 		return new PaymentDto(payment);
+	}
+	
+	private void trySendConfirmedPayment(Payment payment) {
+		
+		try {
+			paymentObserver.notifier(payment);
+		} catch (Exception e) {
+			log.error("Error to try send confirm payment! [{}]", e.getMessage());
+		}		
+	}
+
+	private void tryConfirmPaidOrder(Payment payment) {
+		try {
+			orderGateway.paidOrderConfirm(payment.getId());
+		} catch (Exception e) {
+			log.error("Error to try confirm paid order! [{}]", e.getMessage());
+		}		
 	}
 }
