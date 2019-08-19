@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import br.com.alura.forum.modelo.Usuario;
+import br.com.alura.forum.modelo.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -20,21 +20,21 @@ public class TokenService {
 	@Value("${forum.jwt.secret}")
 	private String secret;
 
-	public String gerarToken(Authentication authentication) {
-		Usuario logado = (Usuario) authentication.getPrincipal();
+	public String generateToken(Authentication authentication) {
+		User logged = (User) authentication.getPrincipal();
 		Date hoje = new Date();
-		Date dataExpiracao = new Date(hoje.getTime() + Long.parseLong(expiration));
+		Date expirationDate = new Date(hoje.getTime() + Long.parseLong(expiration));
 		
 		return Jwts.builder()
-				.setIssuer("API do Fórum da Alura")
-				.setSubject(logado.getId().toString())
+				.setIssuer("Alura Forum API")
+				.setSubject(logged.getId().toString())
 				.setIssuedAt(hoje)
-				.setExpiration(dataExpiracao)
+				.setExpiration(expirationDate)
 				.signWith(SignatureAlgorithm.HS256, secret)
 				.compact();
 	}
 	
-	public boolean isTokenValido(String token) {
+	public boolean isValidToken(String token) {
 		try {
 			Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token);
 			return true;
