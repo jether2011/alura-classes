@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.caelum.distance.application.web.restaurant.response.RestaurantDistanceDto;
 import br.com.caelum.distance.application.web.util.exceptions.ResourceNotFoundException;
+import br.com.caelum.distance.domain.restaurant.entities.Restaurant;
 import br.com.caelum.distance.resources.restaurant.entities.RestaurantMongo;
 import br.com.caelum.distance.resources.restaurant.repository.RestaurantMongoRepository;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,10 @@ class DistanceService {
 
 	private RestaurantMongoRepository mongoRepository;
 
+	public void save(Restaurant restaurant) {
+		mongoRepository.insert(RestaurantMongo.from(restaurant));
+	}
+	
 	public List<RestaurantDistanceDto> restaurantsNearestCep(String cep) {
 		Page<RestaurantMongo> restaurants = mongoRepository.findAll(LIMIT);
 		return calculateDistanceToRestaurants(restaurants.getContent(), cep);

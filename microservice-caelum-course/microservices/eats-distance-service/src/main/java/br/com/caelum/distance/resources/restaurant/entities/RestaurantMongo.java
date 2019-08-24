@@ -24,10 +24,12 @@ public class RestaurantMongo {
 	@NotBlank @Size(max=9)
 	private String cep;
 	
+	private boolean approved;
+	
 	@Indexed
 	private Long cookId;
 
 	public static final RestaurantMongo from(final Restaurant restaurant) {
-		return new RestaurantMongo(restaurant.getId(), restaurant.getCep(), restaurant.getCookId());
+		return new RestaurantMongo(restaurant.getId(), restaurant.getCep(), restaurant.getApproved(), restaurant.getCookId());
 	}
 }
