@@ -13,4 +13,5 @@ public class Restaurant {
 	private String cep;
 	private Boolean approved;
 	private Long cookId;
+	
 }
