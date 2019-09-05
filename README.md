@@ -10,6 +10,10 @@
 
 https://github.com/iluwatar/java-design-patterns
 
+### General
+
+https://github.com/iluwatar/30-seconds-of-java
+
 ### HTTP
 
 https://restfulapi.net/http-methods/
