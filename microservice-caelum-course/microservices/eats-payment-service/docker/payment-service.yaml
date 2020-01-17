@@ -3,18 +3,18 @@ services:
   postgres:
     image: postgres
     environment:
-      POSTGRES_PASSWORD: "Postgres2019!"
+      POSTGRES_PASSWORD: "postgres123"
     ports:
-      - "15432:5432"
+      - "5432:5432"
     volumes:
-      - /home/micro8520/Desktop/jether/volumes/postgres:/var/lib/postgresql/data 
+      - pdb:/var/lib/postgresql/data 
     networks:
       - postgres-compose-network
       
   teste-pgadmin-compose:
     image: dpage/pgadmin4
     environment:
-      PGADMIN_DEFAULT_EMAIL: "jetherrodrigues@gmail.com"
+      PGADMIN_DEFAULT_EMAIL: "dev@gmail.com"
       PGADMIN_DEFAULT_PASSWORD: "PgAdmin2019!"
     ports:
       - "5555:80"
@@ -23,6 +23,8 @@ services:
     networks:
       - postgres-compose-network
 
+volumes:
+  pdb:
 networks: 
   postgres-compose-network:
     driver: bridge
